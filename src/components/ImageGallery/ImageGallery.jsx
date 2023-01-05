@@ -5,7 +5,7 @@ import s from './ImageGallery.module.css';
 const ImageGallery = ({ imageList }) => {
   return (
     <ul className={s.imageGallery}>
-      {imageList.map(({ id, webformatURL, tags }) => {
+      {imageList?.map(({ id, webformatURL, tags }) => {
         return <ImageGalleryItem key={id} src={webformatURL} alt={tags} />;
       })}
     </ul>
@@ -18,8 +18,8 @@ ImageGallery.propTypes = {
       id: PropTypes.number.isRequired,
       webformatURL: PropTypes.string.isRequired,
       tags: PropTypes.string,
-    }).isRequired
-  ).isRequired,
+    })
+  )
 };
 
 export default ImageGallery;

@@ -1,34 +1,47 @@
 import { Component } from 'react';
+import { getPictures } from 'services/pictures.service';
 import Searchbar from './Searchbar/Searchbar';
-import axios from 'axios';
 import ImageGallery from './ImageGallery/ImageGallery';
+import Button from './Button/Button';
 // import PropTypes from 'prop-types';
-
-// key = 32626693-37bc96ab6bf8bfcf28c619d39
 
 class App extends Component {
   state = {
     pictures: [],
+    request: '',
+    page: 1,
   };
 
-  componentDidMount = async () => {
-    const response = await axios.get(
-      'https://pixabay.com/api/?q=cat&page=1&key=32626693-37bc96ab6bf8bfcf28c619d39&image_type=photo&orientation=horizontal&per_page=12'
-    );
+  setRequestWord = word => {
+    this.setState({request: word.toLowerCase()});
+  };
 
-    // console.log(response.data.hits[0].webformatURL);
-    this.setState({ pictures: response.data.hits });
-    //  console.log(this.state.pictures[0]);
-}
+  componentDidUpdate = async (_, prevState) => {
+    if (prevState.page !== this.state.page) {
+      try {
+        const receivedPictures = await getPictures(this.state.request, this.state.page);
+        const pictures = receivedPictures.hits.map(
+          ({ id, webformatURL, largeImageURL, tags }) => {
+            return { id, webformatURL, largeImageURL, tags };
+          }
+        );
+        this.setState(prev => ({ pictures: [...prev.pictures, ...pictures] }));
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+  };
 
-
-  componentDidUpdate = async () => {};
+  handleChangePage = () => {
+    this.setState(prev => ({ page: prev.page + 1 }));
+  };
 
   render() {
     return (
       <>
-        <Searchbar />
-        <ImageGallery imageList={this.state.pictures}/>
+        <Searchbar search={this.setRequestWord} />
+        <ImageGallery imageList={this.state.pictures} />
+        <Button loadMore={this.handleChangePage} />
       </>
     );
   }

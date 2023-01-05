@@ -20,6 +20,7 @@ body {
   background-color: #f9f6e4;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
 }
 
 img {
