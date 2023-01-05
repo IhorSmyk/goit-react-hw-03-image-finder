@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-// key = 32626693-37bc96ab6bf8bfcf28c619d39
-
 const picturesService = axios.create({
   baseURL: 'https://pixabay.com/api/',
   params: {
@@ -12,9 +10,9 @@ const picturesService = axios.create({
   },
 });
 
-export const getPictures = async () => {
+export const getPictures = async (q, page) => {
   const { data } = await picturesService.get('', {
-    params: { q: 'duck', page: 2 },
+    params: { q, page },
   });
   return data;
 };
