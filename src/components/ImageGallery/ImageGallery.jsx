@@ -5,8 +5,8 @@ import s from './ImageGallery.module.css';
 const ImageGallery = ({ imageList }) => {
   return (
     <ul className={s.imageGallery}>
-      {imageList.map(({ id, src, alt }) => {
-        return <ImageGalleryItem id={id} src={src} alt={alt} />;
+      {imageList.map(({ id, webformatURL, tags }) => {
+        return <ImageGalleryItem key={id} src={webformatURL} alt={tags} />;
       })}
     </ul>
   );
@@ -14,10 +14,10 @@ const ImageGallery = ({ imageList }) => {
 
 ImageGallery.propTypes = {
   imageList: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      src: PropTypes.string.isRequired,
-      alt: PropTypes.string,
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      tags: PropTypes.string,
     }).isRequired
   ).isRequired,
 };
