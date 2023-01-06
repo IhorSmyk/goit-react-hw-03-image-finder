@@ -1,8 +1,9 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import s from './Modal.module.css';
+import PropTypes from 'prop-types';
+
 const modalContainer = document.getElementById('modal');
-// import PropTypes from 'prop-types';
 
 class Modal extends Component {
   componentDidMount = () => {
@@ -13,6 +14,7 @@ class Modal extends Component {
   };
 
   handleBackdropClick = e => {
+    console.log(e.current.target);
     if (e.current.target === e.target) {
       this.props.onCloseModal();
     }
@@ -20,7 +22,7 @@ class Modal extends Component {
 
   handleEscapePress = e => {
     if (e.key === 'Escape') {
-      this.ptops.onCloseModal();
+      this.props.onCloseModal();
     }
   };
 
@@ -29,7 +31,7 @@ class Modal extends Component {
       <>
         <div className={s.overlay}>
           <div className={s.modal}>
-            <img src={this.props.link} alt={this.props.tags} />
+            <img src={this.props.largeImageURL} alt={this.props.tags} />
           </div>
         </div>
       </>
@@ -38,4 +40,11 @@ class Modal extends Component {
     return createPortal(jsx, modalContainer);
   }
 }
+
+Modal.propTypes = {
+  onCloseModal: PropTypes.func.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+};
+
 export default Modal;

@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { APP_STATE } from './constants/appState';
-import { FETCH_STATUS } from './constants/fetchStatus';
+import { APP_STATE } from '../constants/appState';
+import { FETCH_STATUS } from '../constants/fetchStatus';
 import { getPictures } from 'services/pictures.service';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -59,6 +59,7 @@ class App extends Component {
 
         <ImageGallery imageList={this.state.pictures} />
         <Button loadMore={this.handleChangePage} />
+
       </>
     );
   }
