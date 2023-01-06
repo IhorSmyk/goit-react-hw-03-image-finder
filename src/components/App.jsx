@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { STATE } from './constants/state';
+import { APP_STATE } from './constants/appState';
 import { FETCH_STATUS } from './constants/fetchStatus';
 import { getPictures } from 'services/pictures.service';
 import Searchbar from './Searchbar/Searchbar';
@@ -9,12 +9,12 @@ import { InfinitySpin } from 'react-loader-spinner';
 
 class App extends Component {
   state = {
-    ...STATE,
+    ...APP_STATE,
   };
 
   setRequest = word => {
     if (word !== this.state.request) {
-      this.setState({ ...STATE, request: word });
+      this.setState({ ...APP_STATE, request: word });
     }
   };
 
