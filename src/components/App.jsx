@@ -58,8 +58,10 @@ class App extends Component {
         )}
 
         <ImageGallery imageList={this.state.pictures} />
-        <Button loadMore={this.handleChangePage} />
 
+        {this.state.pictures.length >= 12 && (
+          <Button loadMore={this.handleChangePage} />
+        )}
       </>
     );
   }
