@@ -1,33 +1,45 @@
 import { Component } from 'react';
+import { STATE } from './constants/state';
+import { FETCH_STATUS } from './constants/fetchStatus';
 import { getPictures } from 'services/pictures.service';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
-// import PropTypes from 'prop-types';
+import { InfinitySpin } from 'react-loader-spinner';
 
 class App extends Component {
   state = {
-    pictures: [],
-    request: '',
-    page: 1,
+    ...STATE,
   };
 
-  setRequestWord = word => {
-    this.setState({request: word.toLowerCase()});
+  setRequest = word => {
+    if (word !== this.state.request) {
+      this.setState({ ...STATE, request: word });
+    }
   };
 
   componentDidUpdate = async (_, prevState) => {
-    if (prevState.page !== this.state.page) {
+    if (
+      prevState.request !== this.state.request ||
+      prevState.page !== this.state.page
+    ) {
+      this.setState({ status: FETCH_STATUS.Loading });
       try {
-        const receivedPictures = await getPictures(this.state.request, this.state.page);
+        const receivedPictures = await getPictures(
+          this.state.request,
+          this.state.page
+        );
         const pictures = receivedPictures.hits.map(
           ({ id, webformatURL, largeImageURL, tags }) => {
             return { id, webformatURL, largeImageURL, tags };
           }
         );
-        this.setState(prev => ({ pictures: [...prev.pictures, ...pictures] }));
-      } catch (err) {
-        console.log(err.message);
+        this.setState(prev => ({
+          pictures: [...prev.pictures, ...pictures],
+          status: FETCH_STATUS.Success,
+        }));
+      } catch (error) {
+        this.setState({ status: FETCH_STATUS.Error });
       }
     }
   };
@@ -39,7 +51,12 @@ class App extends Component {
   render() {
     return (
       <>
-        <Searchbar search={this.setRequestWord} />
+        <Searchbar search={this.setRequest} />
+
+        {this.state.status === FETCH_STATUS.Loading && (
+          <InfinitySpin color="#1b4d89" />
+        )}
+
         <ImageGallery imageList={this.state.pictures} />
         <Button loadMore={this.handleChangePage} />
       </>
