@@ -10,12 +10,11 @@ class Modal extends Component {
     window.addEventListener('keydown', this.handleEscapePress);
   };
   componentWillUnmount = () => {
-    window.removeEventListener('ketdown', this.handleEscapePress);
+    window.removeEventListener('keydown', this.handleEscapePress);
   };
 
   handleBackdropClick = e => {
-    console.log(e.current.target);
-    if (e.current.target === e.target) {
+    if (e.currentTarget === e.target) {
       this.props.onCloseModal();
     }
   };
@@ -29,7 +28,7 @@ class Modal extends Component {
   render() {
     const jsx = (
       <>
-        <div className={s.overlay}>
+        <div className={s.overlay} onClick={this.handleBackdropClick}>
           <div className={s.modal}>
             <img src={this.props.largeImageURL} alt={this.props.tags} />
           </div>
