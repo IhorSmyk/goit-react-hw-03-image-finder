@@ -1,3 +1,4 @@
+//enum;)
 export const FETCH_STATUS = {
   Empty: 'empty',
   Loading: 'loading',

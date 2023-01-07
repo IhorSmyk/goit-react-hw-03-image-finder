@@ -40,7 +40,7 @@ class Searchbar extends Component {
       </header>
     );
   }
-};
+}
 
 Searchbar.propTypes = {
   search: PropTypes.func.isRequired,

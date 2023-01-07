@@ -5,7 +5,7 @@ import { getPictures } from 'services/pictures.service';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
-import { InfinitySpin } from 'react-loader-spinner';
+import Loader from './Loader/Loader';
 
 class App extends Component {
   state = {
@@ -56,7 +56,7 @@ class App extends Component {
         <Searchbar search={this.setRequest} />
 
         {this.state.status === FETCH_STATUS.Loading && (
-          <InfinitySpin color="#1b4d89" />
+          <Loader/>
         )}
 
         <ImageGallery imageList={this.state.pictures} />
