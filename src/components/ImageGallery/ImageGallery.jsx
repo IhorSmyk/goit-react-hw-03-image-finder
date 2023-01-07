@@ -4,18 +4,20 @@ import s from './ImageGallery.module.css';
 
 const ImageGallery = ({ imageList }) => {
   return (
-    <ul className={s.imageGallery}>
-      {imageList?.map(({ id, webformatURL, largeImageURL, tags }) => {
-        return (
-          <ImageGalleryItem
-            key={id}
-            src={webformatURL}
-            largeImageURL={largeImageURL}
-            tags={tags}
-          />
-        );
-      })}
-    </ul>
+    <div className={s.container}>
+      <ul className={s.imageGallery}>
+        {imageList?.map(({ id, webformatURL, largeImageURL, tags }) => {
+          return (
+            <ImageGalleryItem
+              key={id}
+              src={webformatURL}
+              largeImageURL={largeImageURL}
+              tags={tags}
+            />
+          );
+        })}
+      </ul>
+    </div>
   );
 };
 
