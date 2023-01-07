@@ -64,8 +64,6 @@ class App extends Component {
   };
 
   render() {
-
-    console.log(this.state.request);
     return (
       <>
         <Searchbar search={this.setRequest} />
