@@ -15,7 +15,7 @@ class App extends Component {
 
   setRequest = word => {
     if (word === '') {
-      Notify.warning('Enter a name for the image!');
+      Notify.warning('Enter a name of the image!');
     } else if (word !== this.state.request) {
       this.setState({ ...APP_STATE, request: word });
     }
