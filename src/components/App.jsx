@@ -13,15 +13,19 @@ class App extends Component {
     ...APP_STATE,
   };
 
+  componentDidUpdate = (_, prevState) => {
+    this.makeRequest(prevState);
+  };
+
   setRequest = word => {
     if (word === '') {
-      Notify.warning('Enter a name of the image!');
+      Notify.warning('The input field is empty!');
     } else if (word !== this.state.request) {
       this.setState({ ...APP_STATE, request: word });
     }
   };
 
-  componentDidUpdate = async (_, prevState) => {
+  makeRequest = async prevState => {
     if (
       prevState.request !== this.state.request ||
       prevState.page !== this.state.page
@@ -32,7 +36,11 @@ class App extends Component {
           this.state.request,
           this.state.page
         );
+        this.setState({ totalHits: receivedPictures.totalHits });
 
+        if (receivedPictures.totalHits === 0) {
+          Notify.info(`No results for ${this.state.request}`);
+        }
         //copy only the required properties
         const pictures = receivedPictures.hits.map(
           ({ id, webformatURL, largeImageURL, tags }) => {
@@ -45,6 +53,7 @@ class App extends Component {
         }));
       } catch (error) {
         this.setState({ status: FETCH_STATUS.Error });
+        console.log(error.message);
         Notify.failure('Something went wrong!');
       }
     }
@@ -63,7 +72,7 @@ class App extends Component {
 
         <ImageGallery imageList={this.state.pictures} />
 
-        {this.state.pictures.length >= 12 && (
+        {this.state.pictures.length < this.state.totalHits && (
           <Button loadMore={this.handleChangePage} />
         )}
       </>
