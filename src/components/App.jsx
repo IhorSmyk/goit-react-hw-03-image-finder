@@ -6,6 +6,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 class App extends Component {
   state = {
@@ -13,7 +14,9 @@ class App extends Component {
   };
 
   setRequest = word => {
-    if (word !== this.state.request) {
+    if (word === '') {
+      Notify.warning('Enter a name for the image!');
+    } else if (word !== this.state.request) {
       this.setState({ ...APP_STATE, request: word });
     }
   };
@@ -29,7 +32,7 @@ class App extends Component {
           this.state.request,
           this.state.page
         );
-        
+
         //copy only the required properties
         const pictures = receivedPictures.hits.map(
           ({ id, webformatURL, largeImageURL, tags }) => {
@@ -42,6 +45,10 @@ class App extends Component {
         }));
       } catch (error) {
         this.setState({ status: FETCH_STATUS.Error });
+      } finally {
+        if (this.state.status === FETCH_STATUS.Error) {
+          Notify.failure('Something went wrong!');
+        }
       }
     }
   };
@@ -55,9 +62,7 @@ class App extends Component {
       <>
         <Searchbar search={this.setRequest} />
 
-        {this.state.status === FETCH_STATUS.Loading && (
-          <Loader/>
-        )}
+        {this.state.status === FETCH_STATUS.Loading && <Loader />}
 
         <ImageGallery imageList={this.state.pictures} />
 
