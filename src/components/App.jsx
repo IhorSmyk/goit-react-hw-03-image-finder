@@ -21,7 +21,7 @@ class App extends Component {
     if (word === '') {
       Notify.info('The input field is empty!');
     } else if (word !== this.state.request) {
-      this.setState({ ...APP_STATE, request: word });
+      this.setState({ ...APP_STATE, request: word.toLowerCase().trim() });
     }
   };
 
@@ -64,6 +64,8 @@ class App extends Component {
   };
 
   render() {
+
+    console.log(this.state.request);
     return (
       <>
         <Searchbar search={this.setRequest} />
