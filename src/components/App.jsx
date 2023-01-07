@@ -19,7 +19,7 @@ class App extends Component {
 
   setRequest = word => {
     if (word === '') {
-      Notify.warning('The input field is empty!');
+      Notify.info('The input field is empty!');
     } else if (word !== this.state.request) {
       this.setState({ ...APP_STATE, request: word });
     }
@@ -39,7 +39,7 @@ class App extends Component {
         this.setState({ totalHits: receivedPictures.totalHits });
 
         if (receivedPictures.totalHits === 0) {
-          Notify.info(`No results for ${this.state.request}`);
+          Notify.warning(`No results for ${this.state.request}`);
         }
         //copy only the required properties
         const pictures = receivedPictures.hits.map(
