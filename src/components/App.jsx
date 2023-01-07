@@ -45,10 +45,7 @@ class App extends Component {
         }));
       } catch (error) {
         this.setState({ status: FETCH_STATUS.Error });
-      } finally {
-        if (this.state.status === FETCH_STATUS.Error) {
-          Notify.failure('Something went wrong!');
-        }
+        Notify.failure('Something went wrong!');
       }
     }
   };
