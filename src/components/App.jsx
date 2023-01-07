@@ -29,6 +29,8 @@ class App extends Component {
           this.state.request,
           this.state.page
         );
+        
+        //copy only the required properties
         const pictures = receivedPictures.hits.map(
           ({ id, webformatURL, largeImageURL, tags }) => {
             return { id, webformatURL, largeImageURL, tags };

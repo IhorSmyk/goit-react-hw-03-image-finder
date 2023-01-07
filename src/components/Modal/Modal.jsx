@@ -9,6 +9,7 @@ class Modal extends Component {
   componentDidMount = () => {
     window.addEventListener('keydown', this.handleEscapePress);
   };
+  
   componentWillUnmount = () => {
     window.removeEventListener('keydown', this.handleEscapePress);
   };
